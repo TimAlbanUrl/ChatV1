@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ChatView from '../views/ChatView.vue'
+import { supabase } from '../../supabase'
 //import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -8,17 +9,38 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ChatView
-    }/*,
+      component: ChatView,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
-      path: '/about',
-      name: 'about',
+      path: '/register',
+      name: 'register',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }*/
+      component: () => import('@/views/RegisterView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('@/views/LoginView.vue')
+    }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const { data } = await supabase.auth.getSession()
+  const isLoggedIn = !!data.session // !! is not null
+
+  if(to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn)
+    next({ name: 'login' })
+  else
+    next()
 })
 
 export default router

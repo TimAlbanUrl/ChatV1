@@ -12,3 +12,15 @@ body,
 .text-wrap-b {
     overflow-wrap: break-word;
 }
+
+.not-resizable-ta {
+    resize: none;
+}
+
+.w-message-box {
+    width: 496px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}

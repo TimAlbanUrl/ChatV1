@@ -23,14 +23,14 @@ const emit = defineEmits(['delete'])
 </script>
 
 <template>
-    <div class="p-4 flex rounded-lg shadow-2xl bg-gray-800">
+    <div class="p-4 flex rounded-lg shadow-2xl bg-gray-800 w-[31rem]">
         <img :src="message.user.avatarUrl" alt="users_avatar" class="rounded-full h-14 w-14">
         <div class="pl-2">
             <div class="flex">
                 <p class="font-bold m-1">{{ message.user.username }}</p>
                 <p class="text-white text-opacity-50 m-1">{{ formatedDate }}</p>
             </div>
-            <article class="w-96 h-min-24" style="overflow-wrap: break-word;">
+            <article class="w-96 h-min-24 text-wrap-b">
                 <p>
                     {{ message.text }}
                 </p>

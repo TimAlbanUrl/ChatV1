@@ -15,7 +15,7 @@ const addMessage = () => {
             username: "User",
             avatarUrl: "https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg",
         },
-        super: true
+        super: isSuper(messageText.value)
     });
     messageText.value = ""
 };
@@ -24,11 +24,18 @@ const deleteMessage = (id) => {
     console.log(id)
     messageList.value = messageList.value.filter((message) => message.id !== id)
 }
+
+const isSuper = (message) => {
+    if (message.includes("super")) {
+        return true
+    }
+    return false
+}
 </script>
 
 <template>
     <ul class="list-none p-4">
-        <li class="flex justify-center w-message-box">
+        <li class="ml-1 flex justify-center w-message-box">
             <textarea 
             @keyup.enter.exact="addMessage"
             v-model="messageText" class="p-2 text-white bg-gray-900 border-2 border-gray-900 border-b-gray-300 rounded-md ml-3 not-resizable-ta" name="message" id="message" cols="30" rows="1"></textarea>

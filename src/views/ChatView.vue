@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue';
-import MessageComponent from '@/components/MessageComponent.vue';
+import MessageFrameComponent from '@/components/MessageFrameComponent.vue';
 
 const messageText = ref('');
 
@@ -48,7 +48,7 @@ const isSuper = (message) => {
 
         <ul v-for="(message, index) in messageList" :key="index">
             <li class="p-3">
-                <MessageComponent @delete="deleteMessage" :message="message"></MessageComponent>
+                <MessageFrameComponent @delete="deleteMessage" :message="message"></MessageFrameComponent>
             </li>
         </ul>
     </ul>

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import MessageBodyComponent from '@/components/MessageBodyComponent.vue';
 
 const props = defineProps({
     message: {
@@ -7,12 +8,6 @@ const props = defineProps({
         required: false
     }
 });
-
-const formatDate = (date) => {
-    let formattedDay = date.toLocaleDateString();
-    let formattedTime = date.toLocaleTimeString('default', {hour: '2-digit', minute: '2-digit'});
-    return `${formattedDay} ${formattedTime} `;
-}
 
 const formatedDate = computed(() => {
     const date = new Date(props.message.created_at);

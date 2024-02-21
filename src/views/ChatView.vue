@@ -1,36 +1,35 @@
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import MessageFrameComponent from '@/components/MessageFrameComponent.vue';
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from 'pinia';
+import { insertMessage, fetchMessages } from '@/api/messages'
 
 const messageText = ref('');
-
+const { user } = storeToRefs(useUserStore())
 const messageList = ref([]);
 
-const addMessage = () => {
-    messageList.value.unshift({
-        id: Math.random().toString(32).slice(2),
-        text: messageText.value,
-        date: new Date(),
-        user: {
-            username: "User",
-            avatarUrl: "https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg",
-        },
-        super: isSuper(messageText.value)
-    });
-    messageText.value = ""
+const addMessage = async () => {
+    await insertMessage(messageText.value, user.value.id)
+
+    messageText.value = ''
 };
+
+onMounted(async () => {
+    messageList.value = await fetchMessages()
+})
 
 const deleteMessage = (id) => {
     console.log(id)
     messageList.value = messageList.value.filter((message) => message.id !== id)
 }
 
-const isSuper = (message) => {
+/*const isSuper = (message) => {
     if (message.includes("super")) {
         return true
     }
     return false
-}
+}*/
 </script>
 
 <template>

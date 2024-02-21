@@ -45,7 +45,7 @@ const emit = defineEmits(['delete'])
         </div>
     </div>
     <div v-else>
-        <div class="ml-1 p-4 pb-2 flex rounded-lg bg-gray-800 w-[31.5rem]">
+        <div class="ml-1 p-4 pb-2 flex rounded-lg bg-gray-800 w-[31.5rem] shadow-2xl">
             <img :src="message.user.avatarUrl" alt="users_avatar" class="rounded-full h-14 w-14">
             <div class="pl-2">
                 <div class="flex">

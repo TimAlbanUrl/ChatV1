@@ -24,15 +24,17 @@ const onSubmit = async () => {
 </script>
 
 <template>
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-2 p-4 mx-auto max-w-96">
-      <div class="flex flex-col">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" class="p-2 bg-slate-500" required/>
-      </div>
-      <div class="flex flex-col">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" class="p-2 bg-slate-500" required/>
-      </div>
-      <button type="submit" class="p-2 mt-4 bg-blue-500 rounded-md">Log in</button>
-    </form>
+  <div class="m-4 p-4 rounded-lg bg-gray-800 shadow-2xl h-fit">
+      <form @submit.prevent="onSubmit" class="flex flex-col gap-2 p-4 mx-auto max-w-96">
+        <div class="flex flex-col">
+          <label for="email">Email</label>
+          <textarea type="email" id="email" v-model="email" class="p-2 text-white bg-gray-800 border-2 border-gray-800 border-b-gray-300 rounded-md ml-3 not-resizable-ta" cols="30" rows="1"></textarea>
+        </div>
+        <div class="flex flex-col">
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="password" class="p-2 text-white bg-gray-800 border-2 border-gray-800 border-b-gray-300 rounded-md ml-3 not-resizable-ta" required/>
+        </div>
+        <button type="submit" class="p-2 mt-4 bg-blue-500 rounded-full">Log in</button>
+      </form>
+    </div>
   </template>

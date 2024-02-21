@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ChatView from '../views/ChatView.vue'
-import { supabase } from '../../supabase'
+import { supabase } from '../supabase'
 //import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -35,10 +35,13 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const { data } = await supabase.auth.getSession()
-  const isLoggedIn = true//!!data.session // !! is not null
+  const isLoggedIn = !!data.session // !! is not null
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  if(to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn)
+  if(requiresAuth && !isLoggedIn)
     next({ name: 'login' })
+  else if(!requiresAuth && isLoggedIn)
+    next({ name: 'home' })
   else
     next()
 })

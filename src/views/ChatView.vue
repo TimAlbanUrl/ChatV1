@@ -1,13 +1,13 @@
 <script setup>
 import {onMounted, ref} from 'vue';
-import MessageFrameComponent from '@/components/MessageFrameComponent.vue';
+import MessageComponent from '@/components/MessageComponent.vue';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
-import { insertMessage, fetchMessages } from '@/api/messages'
+import { messageList, insertMessage, fetchMessages, subscribeToMessage, deleteMessage } from '@/api/messages'
 
 const messageText = ref('');
 const { user } = storeToRefs(useUserStore())
-const messageList = ref([]);
+const messageContainer = ref(null)
 
 const addMessage = async () => {
     await insertMessage(messageText.value, user.value.id)
@@ -15,26 +15,20 @@ const addMessage = async () => {
     messageText.value = ''
 };
 
+subscribeToMessage()
+
 onMounted(async () => {
-    messageList.value = await fetchMessages()
+    await fetchMessages()
 })
 
-const deleteMessage = (id) => {
-    console.log(id)
-    messageList.value = messageList.value.filter((message) => message.id !== id)
+const handleDeleteMessage = async (id) => {
+    await deleteMessage(id, user.value.id)
 }
-
-/*const isSuper = (message) => {
-    if (message.includes("super")) {
-        return true
-    }
-    return false
-}*/
 </script>
 
 <template>
     <ul class="list-none p-4">
-        <li class="ml-1 flex justify-center w-message-box">
+        <li class="ml-1 flex justify-center w-message-box" ref="messageContainer">
             <textarea 
             @keyup.enter.exact="addMessage"
             v-model="messageText" class="p-2 pl-1 text-white bg-gray-900 border-2 border-gray-900 border-b-gray-300 rounded-md ml-3 not-resizable-ta" name="message" id="message" cols="30" rows="1"></textarea>
@@ -47,7 +41,7 @@ const deleteMessage = (id) => {
 
         <ul v-for="(message, index) in messageList" :key="index">
             <li class="p-3">
-                <MessageFrameComponent @delete="deleteMessage" :message="message"></MessageFrameComponent>
+                <MessageComponent @delete="handleDeleteMessage" :message="message"></MessageComponent>
             </li>
         </ul>
     </ul>

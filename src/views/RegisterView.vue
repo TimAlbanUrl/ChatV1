@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { supabase } from '@/supabase'
 import { useRouter  } from 'vue-router'
+import AppButton from '@/components/AppButton.vue'
 
 const email = ref('')
 const username = ref('')
@@ -44,7 +45,7 @@ const onSubmit = async () => {
           <label for="password">Password</label>
           <input type="password" id="password" v-model="password" class="p-2 text-white bg-gray-800 border-2 border-gray-800 border-b-gray-300 rounded-md ml-3 not-resizable-ta" required/>
         </div>
-        <button type="submit" class="p-2 mt-4 bg-blue-500 rounded-full">Register</button>
+        <AppButton>Register</AppButton>
       </form>
     </div>
   </template>../supabase
